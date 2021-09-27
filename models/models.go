@@ -63,6 +63,7 @@ type Store struct {
 	ShipmentOptions []ShipmentOption `json:"shipment_options"`
 	Categories      []Category       `json:"categories"`
 	Transactions    []Transaction    `json:"transactions"`
+	// Products        []Product        `json:"products"`
 
 	Timestamp
 }
@@ -90,6 +91,7 @@ type Category struct {
 type Product struct {
 	ID
 	CategoryID  uint   `json:"category_id"`
+	StoreID     uint   `json:"store_id"`
 	Name        string `json:"name"`
 	Slug        string `json:"slug"`
 	Description string `json:"description"`

@@ -26,9 +26,21 @@ func InitDB() {
 		panic(e)
 	}
 	DB = db
-	// InitMigrate()
+	InitMigrate()
 }
 
 func InitMigrate() {
-	DB.AutoMigrate(&models.User{}, &models.AddressOption{}, &models.Cart{}, &models.CartDetail{}, &models.Store{}, &models.ShipmentOption{}, &models.Category{}, &models.Product{}, &models.ProductGallery{}, &models.Transaction{}, &models.TransactionProduct{})
+	DB.AutoMigrate(
+		// &models.User{},
+		// &models.AddressOption{},
+		// &models.Cart{},
+		// &models.CartDetail{},
+		&models.Store{},
+		// &models.ShipmentOption{},
+		// &models.Category{},
+		&models.Product{},
+		// &models.ProductGallery{},
+		// &models.Transaction{},
+		// &models.TransactionProduct{},
+	)
 }
