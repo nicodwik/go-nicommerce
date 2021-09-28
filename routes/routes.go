@@ -20,9 +20,23 @@ func New() *echo.Echo {
 	e.GET("/category/:store_id", controllers.GetCategoriesByStoreIDController)
 	e.POST("/category/:store_id", controllers.InsertCategoryController)
 
+	// Product
 	e.GET("/product/:store_id", controllers.GetProductsByStoreIDController)
 	e.POST("/product/:category_id", controllers.InsertProductByCategoryIDController)
 
-	e.POST("/address_option/:user_id", controllers.InsertAddressOptionByUserIDController)
+	// Address Option
+	e.GET("/address-option/:user_id", controllers.GetAddressOptionsByUserIDController)
+	e.POST("/address-option/:user_id", controllers.InsertAddressOptionByUserIDController)
+
+	// Shipment Option
+	e.GET("/shipment-option/:store_id", controllers.GetShipmentOptionsByStoreIDController)
+	e.POST("/shipment-option/:store_id", controllers.InsertShipmentOptionByStoreIDController)
+
+	// Product Gallery
+	e.GET("/product-gallery/:product_id", controllers.GetProductGalleriesByProductIDController)
+	e.POST("/product-gallery/:product_id", controllers.InsertProductGalleryByProductIDController)
+
+	// Cart
+	e.POST("/cart/:cart_id", controllers.InsertProductToCart)
 	return e
 }

@@ -32,7 +32,6 @@ type Cart struct {
 	ID
 	UserID        uint `json:"user_id"`
 	ShippingPrice int  `json:"shipping_price"`
-	Tax           int  `json:"tax"`
 	Discount      int  `json:"discount"`
 	TotalPrice    int  `json:"total_price"`
 
@@ -108,8 +107,9 @@ type Product struct {
 
 type ProductGallery struct {
 	ID
-	ProductID uint `json:"product_id"`
-	IsPrimary bool `json:"is_primary"`
+	ProductID uint   `json:"product_id"`
+	Photo     string `json:"photo"`
+	IsPrimary bool   `json:"is_primary"`
 	Timestamp
 }
 

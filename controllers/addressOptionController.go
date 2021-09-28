@@ -33,3 +33,19 @@ func InsertAddressOptionByUserIDController(c echo.Context) error {
 		"data":    savedAddressOption,
 	})
 }
+
+func GetAddressOptionsByUserIDController(c echo.Context) error {
+	userID, _ := strconv.Atoi(c.Param("user_id"))
+
+	addressOption, err := database.GetAddressOptionsByUserID(userID)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success",
+		"data":    addressOption,
+	})
+}

@@ -15,3 +15,22 @@ func InsertCartBelongsToUser(user *models.User) (interface{}, error) {
 
 	return cart, nil
 }
+
+func InsertProductToCart(cartDetail *models.CartDetail) (interface{}, error) {
+
+	if err := config.DB.Create(&cartDetail).Error; err != nil {
+		return nil, err
+	}
+
+	return cartDetail, nil
+}
+
+func GetCartByID(id int) (*models.Cart, error) {
+	var cart models.Cart
+
+	if err := config.DB.Where("id = ?", id).First(&cart).Error; err != nil {
+		return nil, err
+	}
+
+	return &cart, nil
+}
