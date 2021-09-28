@@ -11,6 +11,23 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+func LoginController(c echo.Context) error {
+	user := models.User{}
+	c.Bind(&user)
+
+	users, err := database.LoginUser(&user, user.Password)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "success",
+		"users":  users,
+	})
+}
+
 func GetUserController(c echo.Context) error {
 	users, e := database.GetUsers()
 

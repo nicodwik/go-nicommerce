@@ -12,6 +12,7 @@ func New() *echo.Echo {
 	// User
 	e.GET("/users", controllers.GetUserController)
 	e.POST("/users", controllers.InsertUserController)
+	e.POST("/login", controllers.LoginController)
 
 	// Store
 	e.POST("/store/:user_id", controllers.ActivateStoreController)
