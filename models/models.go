@@ -10,6 +10,7 @@ type User struct {
 	Phone       string `json:"phone" form:"phone"`
 	Avatar      string `json:"avatar" form:"avatar"`
 	Password    string `json:"-" form:"password"`
+	Token       string `json:"token"`
 	StoreStatus bool   `json:"store_status" form:"store_status"`
 
 	// Relationship

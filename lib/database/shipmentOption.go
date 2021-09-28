@@ -23,3 +23,13 @@ func GetShipmentOptionsByStoreID(storeID int) (interface{}, error) {
 
 	return shipmentOptions, nil
 }
+
+func GetShipmentOptionByID(id int) (*models.ShipmentOption, error) {
+	var shipmentOption models.ShipmentOption
+
+	if err := config.DB.Where("id = ?", id).Find(&shipmentOption).Error; err != nil {
+		return nil, err
+	}
+
+	return &shipmentOption, nil
+}

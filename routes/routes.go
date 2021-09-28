@@ -38,5 +38,10 @@ func New() *echo.Echo {
 
 	// Cart
 	e.POST("/cart/:cart_id", controllers.InsertProductToCart)
+	e.DELETE("/cart/:cart_id", controllers.DeleteProductFromCart)
+
+	// Transaction
+	e.POST("/transaction/:cart_id", controllers.InsertTransactionController)
+
 	return e
 }

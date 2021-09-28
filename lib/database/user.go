@@ -15,6 +15,16 @@ func GetUsers() (interface{}, error) {
 	return users, nil
 }
 
+func GetUserByID(id int) (*models.User, error) {
+	var user models.User
+
+	if err := config.DB.Find(&user).Error; err != nil { // Preload for retreive relationship data
+		return nil, err
+	}
+
+	return &user, nil
+}
+
 func InsertUser(user *models.User) (interface{}, error) {
 	if err := config.DB.Create(&user).Error; err != nil {
 		return nil, err

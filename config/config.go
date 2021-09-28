@@ -31,7 +31,7 @@ func InitDB() {
 
 func InitMigrate() {
 	DB.AutoMigrate(
-		// &models.User{},
+		&models.User{},
 		// &models.AddressOption{},
 		// &models.Cart{},
 		// &models.CartDetail{},
@@ -39,7 +39,7 @@ func InitMigrate() {
 		// &models.ShipmentOption{},
 		// &models.Category{},
 		// &models.Product{},
-		&models.ProductGallery{},
+		// &models.ProductGallery{},
 		// &models.Transaction{},
 		// &models.TransactionProduct{},
 	)

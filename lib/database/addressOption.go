@@ -23,3 +23,13 @@ func GetAddressOptionsByUserID(userID int) (interface{}, error) {
 
 	return addressOptions, nil
 }
+
+func GetAddressOptionByID(id int) (*models.AddressOption, error) {
+	var addressOption models.AddressOption
+
+	if err := config.DB.Where("id = ?", id).Find(&addressOption).Error; err != nil {
+		return nil, err
+	}
+
+	return &addressOption, nil
+}
