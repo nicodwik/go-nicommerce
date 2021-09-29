@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"mini-project-acp12/lib/database"
 	"mini-project-acp12/models"
 	"net/http"
@@ -12,16 +13,25 @@ import (
 )
 
 type shippingData struct {
-	Name     string `json"name"`
-	Phone    string `json"phone"`
-	Province string `json"province"`
-	City     string `json"city"`
-	Address  string `json"address"`
-	Courier  string `json"courier"`
+	Name     string `json:"name"`
+	Phone    string `json:"phone"`
+	Province string `json:"province"`
+	City     string `json:"city"`
+	Address  string `json:"address"`
+	Courier  string `json:"courier"`
 }
 
 type detailTransaction struct {
 	transactionProducts []models.TransactionProduct
+}
+
+type province struct {
+	Nama string `json:"nama"`
+}
+
+type city struct {
+	IdProvinsi string `json:"id_provinsi"`
+	Nama       string `json:"nama"`
 }
 
 func InsertTransactionController(c echo.Context) error {
@@ -62,11 +72,23 @@ func InsertTransactionController(c echo.Context) error {
 		})
 	}
 
+	// get province data
+	provinceResponse, _ := http.Get("https://dev.farizdotid.com/api/daerahindonesia/provinsi/" + strconv.Itoa(addressOption.ProvinceID))
+	provinceResponseData, _ := ioutil.ReadAll(provinceResponse.Body)
+	var province province
+	json.Unmarshal(provinceResponseData, &province)
+
+	// get city data
+	cityResponse, _ := http.Get("https://dev.farizdotid.com/api/daerahindonesia/kota/" + strconv.Itoa(addressOption.CityID))
+	cityResponseData, _ := ioutil.ReadAll(cityResponse.Body)
+	var city city
+	json.Unmarshal(cityResponseData, &city)
+
 	shippingData := shippingData{
 		Name:     user.Firstname + user.Lastname,
 		Phone:    user.Phone,
-		Province: "Jawa Timur",
-		City:     "Kota Malang",
+		Province: province.Nama,
+		City:     city.Nama,
 		Address:  addressOption.Address,
 		Courier:  shipmentOption.Name,
 	}
@@ -125,6 +147,14 @@ func InsertTransactionController(c echo.Context) error {
 	}
 
 	savedTransaction.TransactionProducts = savedTransactionProducts
+
+	// empty cart
+	errr := database.EmptyCartByCartID(cartID)
+	if errr != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": errr.Error(),
+		})
+	}
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"message": "success",

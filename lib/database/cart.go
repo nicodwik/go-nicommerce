@@ -73,3 +73,12 @@ func UpdateCartInfo(cart *models.Cart) (interface{}, error) {
 
 	return &cart, nil
 }
+
+func EmptyCartByCartID(cartID int) error {
+
+	if err := config.DB.Where("cart_id = ?", cartID).First(&cartID).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
