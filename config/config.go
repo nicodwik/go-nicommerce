@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"mini-project-acp12/constants"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -10,14 +11,7 @@ import (
 var DB *gorm.DB
 
 func InitDB() {
-	config := map[string]string{
-		"DB_Username": "root",
-		"DB_Password": "",
-		"DB_Host":     "127.0.0.1",
-		"DB_Port":     "3306",
-		"DB_Name":     "mini_project_acp12",
-	}
-	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", config["DB_Username"], config["DB_Password"], config["DB_Host"], config["DB_Port"], config["DB_Name"])
+	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", constants.DB_USERNAME, constants.DB_PASSWORD, constants.DB_HOST, constants.DB_PORT, constants.DB_NAME)
 	// fmt.Println(connectionString)
 	var e error
 	db, e := gorm.Open(mysql.Open(connectionString), &gorm.Config{})
