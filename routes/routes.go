@@ -23,6 +23,7 @@ func New() *echo.Echo {
 	// User
 	m.GET("/users", controllers.GetUserController)
 	m.GET("/users/:id", controllers.GetUserByIDController)
+	m.PUT("/users", controllers.UpdateUserController)
 
 	// Store
 	m.POST("/store/:user_id", controllers.ActivateStoreController)

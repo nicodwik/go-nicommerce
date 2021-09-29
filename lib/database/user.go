@@ -60,3 +60,11 @@ func InsertUser(user *models.User) (interface{}, error) {
 
 	return user, nil
 }
+
+func UpdateUser(user *models.User) (interface{}, error) {
+	if err := config.DB.Save(&user).Error; err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}

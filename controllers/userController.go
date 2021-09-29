@@ -3,6 +3,7 @@ package controllers
 import (
 	"mini-project-acp12/helpers"
 	"mini-project-acp12/lib/database"
+	"mini-project-acp12/middlewares"
 	"mini-project-acp12/models"
 	"net/http"
 	"strconv"
@@ -87,5 +88,35 @@ func InsertUserController(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"message": "success",
 		"data":    savedCart,
+	})
+}
+
+func UpdateUserController(c echo.Context) error {
+	userID := middlewares.ExtractTokenUserId(c)
+
+	hashed, err := bcrypt.GenerateFromPassword([]byte(c.FormValue("password")), 14)
+	if err != nil {
+		return helpers.ServerErrorResponse(err.Error())
+	}
+
+	user, _ := database.GetUserByID(userID)
+
+	user.Firstname = c.FormValue("firstname")
+	user.Lastname = c.FormValue("lastname")
+	user.Email = c.FormValue("email")
+	user.Phone = c.FormValue("phone")
+	user.Avatar = c.FormValue("avatar")
+	user.Password = string(hashed)
+
+	savedUser, err := database.UpdateUser(user)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "success",
+		"users":  savedUser,
 	})
 }
