@@ -5,6 +5,7 @@ import (
 	"mini-project-acp12/lib/database"
 	"mini-project-acp12/models"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/labstack/echo"
@@ -25,6 +26,22 @@ func LoginController(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"status": "success",
 		"users":  users,
+	})
+}
+
+func GetUserByIDController(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	user, err := database.GetUserByID(id)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "success",
+		"users":  user,
 	})
 }
 

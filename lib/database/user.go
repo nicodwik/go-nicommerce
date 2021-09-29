@@ -45,7 +45,7 @@ func GetUsers() (interface{}, error) {
 func GetUserByID(id int) (*models.User, error) {
 	var user models.User
 
-	if err := config.DB.Find(&user).Error; err != nil { // Preload for retreive relationship data
+	if err := config.DB.Preload("Cart").Preload("Store").Where("id = ?", id).First(&user).Error; err != nil { // Preload for retreive relationship data
 		return nil, err
 	}
 

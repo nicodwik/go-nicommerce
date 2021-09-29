@@ -1,48 +1,58 @@
 package routes
 
 import (
+	"mini-project-acp12/constants"
 	"mini-project-acp12/controllers"
 
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 )
 
 func New() *echo.Echo {
 	e := echo.New()
+	r := e.Group("/api/v1")
+
+	// route without middleware
+	r.POST("/login", controllers.LoginController)
+	r.POST("/register", controllers.InsertUserController)
+
+	// route with middleware
+	m := r.Group("/member")
+	m.Use(middleware.JWT([]byte(constants.SECRETE_JWT)))
 
 	// User
-	e.GET("/users", controllers.GetUserController)
-	e.POST("/users", controllers.InsertUserController)
-	e.POST("/login", controllers.LoginController)
+	m.GET("/users", controllers.GetUserController)
+	m.GET("/users/:id", controllers.GetUserByIDController)
 
 	// Store
-	e.POST("/store/:user_id", controllers.ActivateStoreController)
+	m.POST("/store/:user_id", controllers.ActivateStoreController)
 
 	// Category
-	e.GET("/category/:store_id", controllers.GetCategoriesByStoreIDController)
-	e.POST("/category/:store_id", controllers.InsertCategoryController)
+	m.GET("/category/:store_id", controllers.GetCategoriesByStoreIDController)
+	m.POST("/category/:store_id", controllers.InsertCategoryController)
 
 	// Product
-	e.GET("/product/:store_id", controllers.GetProductsByStoreIDController)
-	e.POST("/product/:category_id", controllers.InsertProductByCategoryIDController)
+	m.GET("/product/:store_id", controllers.GetProductsByStoreIDController)
+	m.POST("/product/:category_id", controllers.InsertProductByCategoryIDController)
 
 	// Address Option
-	e.GET("/address-option/:user_id", controllers.GetAddressOptionsByUserIDController)
-	e.POST("/address-option/:user_id", controllers.InsertAddressOptionByUserIDController)
+	m.GET("/address-option/:user_id", controllers.GetAddressOptionsByUserIDController)
+	m.POST("/address-option/:user_id", controllers.InsertAddressOptionByUserIDController)
 
 	// Shipment Option
-	e.GET("/shipment-option/:store_id", controllers.GetShipmentOptionsByStoreIDController)
-	e.POST("/shipment-option/:store_id", controllers.InsertShipmentOptionByStoreIDController)
+	m.GET("/shipment-option/:store_id", controllers.GetShipmentOptionsByStoreIDController)
+	m.POST("/shipment-option/:store_id", controllers.InsertShipmentOptionByStoreIDController)
 
 	// Product Gallery
-	e.GET("/product-gallery/:product_id", controllers.GetProductGalleriesByProductIDController)
-	e.POST("/product-gallery/:product_id", controllers.InsertProductGalleryByProductIDController)
+	m.GET("/product-gallery/:product_id", controllers.GetProductGalleriesByProductIDController)
+	m.POST("/product-gallery/:product_id", controllers.InsertProductGalleryByProductIDController)
 
 	// Cart
-	e.POST("/cart/:cart_id", controllers.InsertProductToCart)
-	e.DELETE("/cart/:cart_id", controllers.DeleteProductFromCart)
+	m.POST("/cart/:cart_id", controllers.InsertProductToCart)
+	m.DELETE("/cart/:cart_id", controllers.DeleteProductFromCart)
 
 	// Transaction
-	e.POST("/transaction/:cart_id", controllers.InsertTransactionController)
+	m.POST("/transaction/:cart_id", controllers.InsertTransactionController)
 
 	return e
 }
