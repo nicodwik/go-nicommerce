@@ -13,10 +13,10 @@ import (
 )
 
 func LoginController(c echo.Context) error {
-	user := models.User{}
-	c.Bind(&user)
+	email := c.FormValue("email")
+	password := c.FormValue("password")
 
-	users, err := database.LoginUser(&user, user.Password)
+	users, err := database.LoginUser(email, password)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err.Error(),

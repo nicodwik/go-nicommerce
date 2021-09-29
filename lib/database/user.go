@@ -8,16 +8,17 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func LoginUser(user *models.User, rawPassword string) (interface{}, error) {
+func LoginUser(email string, rawPassword string) (interface{}, error) {
 	var err error
+	var user models.User
 
-	if err := config.DB.Where("email = ?", user.Email).First(user).Error; err != nil {
+	if err := config.DB.Where("email = ?", email).First(&user).Error; err != nil {
 		return nil, err
 	}
 
 	errr := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(rawPassword))
 	if errr != nil {
-		return nil, err
+		return nil, errr
 	}
 
 	user.Token, err = middlewares.CreateToken(int(user.ID.ID))
