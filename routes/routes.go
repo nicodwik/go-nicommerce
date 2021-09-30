@@ -4,12 +4,22 @@ import (
 	"mini-project-acp12/constants"
 	"mini-project-acp12/controllers"
 
+	"github.com/go-playground/validator"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
 
+type customValidator struct {
+	validator *validator.Validate
+}
+
+func (cv *customValidator) Validate(i interface{}) error {
+	return cv.validator.Struct(i)
+}
+
 func New() *echo.Echo {
 	e := echo.New()
+	e.Validator = &customValidator{validator: validator.New()}
 	r := e.Group("/api/v1")
 
 	// route without middleware
@@ -34,7 +44,6 @@ func New() *echo.Echo {
 
 	// Product
 	m.GET("/product/:store_id", controllers.GetProductsByStoreIDController)
-	// m.POST("/product/:store_id", controllers.InsertProductByCategoryIDController)
 	m.POST("/product/category/:category_id", controllers.InsertProductByCategoryIDController)
 
 	// Address Option
