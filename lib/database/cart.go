@@ -75,8 +75,9 @@ func UpdateCartInfo(cart *models.Cart) (interface{}, error) {
 }
 
 func EmptyCartByCartID(cartID int) error {
+	var cartDetails []models.CartDetail
 
-	if err := config.DB.Where("cart_id = ?", cartID).First(&cartID).Error; err != nil {
+	if err := config.DB.Where("cart_id = ?", cartID).Delete(&cartDetails).Error; err != nil {
 		return err
 	}
 

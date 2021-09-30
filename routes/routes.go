@@ -34,7 +34,8 @@ func New() *echo.Echo {
 
 	// Product
 	m.GET("/product/:store_id", controllers.GetProductsByStoreIDController)
-	m.POST("/product/:category_id", controllers.InsertProductByCategoryIDController)
+	// m.POST("/product/:store_id", controllers.InsertProductByCategoryIDController)
+	m.POST("/product/category/:category_id", controllers.InsertProductByCategoryIDController)
 
 	// Address Option
 	m.GET("/address-option/:user_id", controllers.GetAddressOptionsByUserIDController)

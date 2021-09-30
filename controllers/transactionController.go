@@ -136,6 +136,16 @@ func InsertTransactionController(c echo.Context) error {
 			PriceCut:  product.PriceCut,
 			OrderedAt: time.Now(),
 		}
+
+		// count reduced item
+		product.Stock -= item.Qty
+		_, errr := database.UpdateProductInfo(product)
+		if errr != nil {
+			return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+				"message": errr.Error(),
+			})
+		}
+
 		detailTransaction.transactionProducts = append(detailTransaction.transactionProducts, transactionProduct)
 	}
 
@@ -153,6 +163,17 @@ func InsertTransactionController(c echo.Context) error {
 	if errr != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": errr.Error(),
+		})
+	}
+
+	cart.ShippingPrice = 0
+	cart.Discount = 0
+	cart.TotalPrice = 0
+
+	_, errrr := database.UpdateCartInfo(cart)
+	if errrr != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": errrr.Error(),
 		})
 	}
 

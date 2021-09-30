@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"mini-project-acp12/constants"
+	"mini-project-acp12/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -24,16 +25,16 @@ func InitDB() {
 
 func InitMigrate() {
 	DB.AutoMigrate(
-	// 	&models.User{},
-	// 	&models.AddressOption{},
-	// 	&models.Cart{},
-	// 	&models.CartDetail{},
-	// 	&models.Store{},
-	// 	&models.ShipmentOption{},
-	// 	&models.Category{},
-	// 	&models.Product{},
-	// 	&models.ProductGallery{},
-	// 	&models.Transaction{},
-	// 	&models.TransactionProduct{},
+		&models.User{},
+		&models.AddressOption{},
+		&models.Cart{},
+		&models.CartDetail{},
+		&models.Store{},
+		&models.ShipmentOption{},
+		&models.Category{},
+		&models.Product{},
+		&models.ProductGallery{},
+		&models.Transaction{},
+		&models.TransactionProduct{},
 	)
 }

@@ -33,3 +33,12 @@ func GetProductByID(id int) (*models.Product, error) {
 
 	return &product, nil
 }
+
+func UpdateProductInfo(product *models.Product) (*models.Product, error) {
+
+	if err := config.DB.Save(&product).Error; err != nil {
+		return nil, err
+	}
+
+	return product, nil
+}

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"mini-project-acp12/lib/database"
 	"mini-project-acp12/models"
 	"net/http"
@@ -20,7 +19,7 @@ func InsertProductByCategoryIDController(c echo.Context) error {
 	priceCut, _ := strconv.Atoi(c.FormValue("price_cut"))
 
 	category, err := database.GetCategoryByID(categoryId)
-	fmt.Println(category)
+	// fmt.Println(category)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err.Error(),
