@@ -47,7 +47,7 @@ func InsertProductToCart(c echo.Context) error {
 
 	cart.ShippingPrice += (weight * qty) * shippingPrice
 	cart.Discount += product.PriceCut * qty
-	cart.TotalPrice += (product.BasePrice * qty) - cart.Discount + shippingPrice
+	cart.TotalPrice += ((product.BasePrice * qty) - cart.Discount) + cart.ShippingPrice
 
 	// insert cart detail
 	_, err1 := database.InsertProductToCart(&cartDetail)

@@ -2,9 +2,11 @@ package config
 
 import (
 	"fmt"
-	"mini-project-acp12/constants"
+	"log"
 	"mini-project-acp12/models"
+	"os"
 
+	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -12,7 +14,12 @@ import (
 var DB *gorm.DB
 
 func InitDB() {
-	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", constants.DB_USERNAME, constants.DB_PASSWORD, constants.DB_HOST, constants.DB_PORT, constants.DB_NAME)
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Error loading env file")
+	}
+
+	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", os.Getenv("DB_USERNAME"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB_NAME"))
 	// fmt.Println(connectionString)
 	var e error
 	db, e := gorm.Open(mysql.Open(connectionString), &gorm.Config{})
