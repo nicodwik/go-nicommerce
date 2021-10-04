@@ -14,6 +14,11 @@ This project made with Model View Controller (MVC)
 - Database using [GORM-Mysql](https://gorm.io/docs/connecting_to_the_database.html)
 - Auto Reload using [Fresh](https://github.com/gravityblast/fresh)
 
+## API Documentation
+[Link](https://documenter.getpostman.com/view/11174314/UUxzCTtP)
+
+[Postman Collection](https://www.getpostman.com/collections/ff3b73d96108950d4d18)
+
 ## Installation
 - Fork this repository
 - Clone from forked repository
