@@ -15,16 +15,16 @@ services:
   final-project-acp12:
     container_name: altastore
     image: final-project-acp12:1.0.0
-    ports:
-      - 8000:8000
-    depends_on:
-      - mysql
     environment:
       - DB_HOST=0.0.0.0
       - DB_PORT=3307
       - DB_NAME=final_project_acp12
       - DB_USERNAME=root
       - DB_PASSWORD=password
+    depends_on:
+      - mysql
+    ports:
+      - 8000:8000
     networks:
       - altastore_network
       
