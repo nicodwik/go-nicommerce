@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"go-nicommerce/config"
+	"go-nicommerce/env"
 	"go-nicommerce/routes"
 	"log"
 
@@ -16,5 +18,5 @@ func main() {
 
 	config.InitDB()
 	e := routes.New()
-	e.Logger.Fatal(e.Start(":8000"))
+	e.Logger.Fatal(e.Start(fmt.Sprintf(":%v", env.Find("APP_PORT", "8000"))))
 }
