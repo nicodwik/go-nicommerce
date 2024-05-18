@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"mini-project-acp12/helpers"
-	"mini-project-acp12/lib/database"
-	"mini-project-acp12/middlewares"
-	"mini-project-acp12/models"
+	"go-nicommerce/helpers"
+	"go-nicommerce/lib/database"
+	"go-nicommerce/middlewares"
+	"go-nicommerce/models"
 	"net/http"
 	"strconv"
 	"time"

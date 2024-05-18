@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"mini-project-acp12/constants"
+	"go-nicommerce/constants"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"

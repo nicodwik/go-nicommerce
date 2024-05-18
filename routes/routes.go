@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"mini-project-acp12/constants"
-	"mini-project-acp12/controllers"
+	"go-nicommerce/constants"
+	"go-nicommerce/controllers"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo"

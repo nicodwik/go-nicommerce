@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"mini-project-acp12/lib/database"
-	"mini-project-acp12/models"
+	"go-nicommerce/lib/database"
+	"go-nicommerce/models"
 	"net/http"
 	"strconv"
 

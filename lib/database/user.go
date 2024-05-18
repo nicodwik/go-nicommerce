@@ -1,9 +1,9 @@
 package database
 
 import (
-	"mini-project-acp12/config"
-	"mini-project-acp12/middlewares"
-	"mini-project-acp12/models"
+	"go-nicommerce/config"
+	"go-nicommerce/middlewares"
+	"go-nicommerce/models"
 
 	"golang.org/x/crypto/bcrypt"
 )

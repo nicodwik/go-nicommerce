@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"mini-project-acp12/config"
+	"go-nicommerce/config"
 	"net/http"
 	"net/http/httptest"
 	"strings"

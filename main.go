@@ -1,8 +1,8 @@
 package main
 
 import (
-	"mini-project-acp12/config"
-	"mini-project-acp12/routes"
+	"go-nicommerce/config"
+	"go-nicommerce/routes"
 )
 
 func main() {

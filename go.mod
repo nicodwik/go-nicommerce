@@ -1,4 +1,4 @@
-module mini-project-acp12
+module go-nicommerce
 
 go 1.17
 

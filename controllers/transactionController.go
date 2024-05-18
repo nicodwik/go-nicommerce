@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"encoding/json"
+	"go-nicommerce/lib/database"
+	"go-nicommerce/models"
 	"io/ioutil"
-	"mini-project-acp12/lib/database"
-	"mini-project-acp12/models"
 	"net/http"
 	"strconv"
 	"time"

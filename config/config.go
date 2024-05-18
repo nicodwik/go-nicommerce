@@ -2,8 +2,8 @@ package config
 
 import (
 	"fmt"
-	"mini-project-acp12/constants"
-	"mini-project-acp12/models"
+	"go-nicommerce/constants"
+	"go-nicommerce/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

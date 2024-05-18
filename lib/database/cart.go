@@ -1,8 +1,8 @@
 package database
 
 import (
-	"mini-project-acp12/config"
-	"mini-project-acp12/models"
+	"go-nicommerce/config"
+	"go-nicommerce/models"
 )
 
 func InsertCartBelongsToUser(user *models.User) (interface{}, error) {
