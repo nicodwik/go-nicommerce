@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"go-nicommerce/constants"
 	"go-nicommerce/controllers"
+	"go-nicommerce/env"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo"
@@ -28,7 +28,8 @@ func New() *echo.Echo {
 
 	// route with middleware
 	m := r.Group("/member")
-	m.Use(middleware.JWT([]byte(constants.SECRETE_JWT)))
+	jwtSecret := env.Find("SECRETE_JWT", "legal")
+	m.Use(middleware.JWT([]byte(jwtSecret)))
 
 	// User
 	m.GET("/users", controllers.GetUserController)

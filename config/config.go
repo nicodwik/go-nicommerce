@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	"go-nicommerce/constants"
+	"go-nicommerce/env"
 	"go-nicommerce/models"
 
 	"gorm.io/driver/mysql"
@@ -17,8 +17,13 @@ func InitDB() {
 	// 	log.Fatalf(err.Error())
 	// }
 
-	// connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", os.Getenv("DB_USERNAME"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB_NAME"))
-	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", constants.DB_USERNAME, constants.DB_PASSWORD, constants.DB_HOST, constants.DB_PORT, constants.DB_NAME)
+	dbUsername := env.Find("DB_USERNAME", "root")
+	dbPassword := env.Find("DB_PASSWORD", "root")
+	dbHost := env.Find("DB_HOST", "host.docker.internal")
+	dbPort := env.Find("DB_PORT", "3306")
+	dbName := env.Find("DB_NAME", "go_nicommerce")
+
+	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbUsername, dbPassword, dbHost, dbPort, dbName)
 	// fmt.Println(connectionString)
 	var e error
 	db, e := gorm.Open(mysql.Open(connectionString), &gorm.Config{})

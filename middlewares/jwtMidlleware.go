@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"go-nicommerce/constants"
+	"go-nicommerce/env"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -9,13 +9,15 @@ import (
 )
 
 func CreateToken(userId int) (string, error) {
+	jwtSecret := env.Find("SECRETE_JWT", "legal")
+
 	claims := jwt.MapClaims{}
 	claims["authorized"] = true
 	claims["userId"] = userId
 	claims["exp"] = time.Now().Add(time.Hour * 1).Unix()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(constants.SECRETE_JWT))
+	return token.SignedString([]byte(jwtSecret))
 }
 
 func ExtractTokenUserId(e echo.Context) int {
