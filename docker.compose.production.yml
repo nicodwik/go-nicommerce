@@ -1,0 +1,11 @@
+services:
+    go-nicommerce:
+        container_name: go-nicommerce
+        build:
+            context: ./
+            dockerfile: Dockerfile.production
+        ports:
+            - '${APP_PORT:-8011}:8011'
+        restart: always
+        extra_hosts:
+            - host.docker.internal:host-gateway
