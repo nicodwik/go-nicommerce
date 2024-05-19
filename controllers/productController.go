@@ -67,3 +67,60 @@ func GetProductsByStoreIDController(c echo.Context) error {
 	})
 
 }
+
+func UpdateProductByProductID(c echo.Context) error {
+	productID, _ := strconv.Atoi(c.Param("product_id"))
+	product, err := database.GetProductByID(productID)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	stock, _ := strconv.Atoi(c.FormValue("stock"))
+	weight, _ := strconv.Atoi(c.FormValue("weight"))
+	basePrice, _ := strconv.Atoi(c.FormValue("base_price"))
+	priceCut, _ := strconv.Atoi(c.FormValue("price_cut"))
+
+	product.Name = c.FormValue("name")
+	product.Description = c.FormValue("description")
+	product.Stock = stock
+	product.Weight = weight
+	product.BasePrice = basePrice
+	product.PriceCut = priceCut
+
+	updatedProduct, err := database.UpdateProductInfo(product)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success",
+		"data":    updatedProduct,
+	})
+
+}
+
+func DeleteProductByProductID(c echo.Context) error {
+	productID, _ := strconv.Atoi(c.Param("product_id"))
+	product, err := database.GetProductByID(productID)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	err = database.DeleteProduct(product)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success",
+		"data":    product,
+	})
+}

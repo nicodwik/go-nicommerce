@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"go-nicommerce/lib/database"
+	"go-nicommerce/middlewares"
 	"go-nicommerce/models"
 	"net/http"
 	"strconv"
@@ -10,7 +11,7 @@ import (
 )
 
 func InsertAddressOptionByUserIDController(c echo.Context) error {
-	userID, _ := strconv.Atoi(c.Param("user_id"))
+	userID := middlewares.ExtractTokenUserId(c)
 	provinceID, _ := strconv.Atoi(c.FormValue("province_id"))
 	cityID, _ := strconv.Atoi(c.FormValue("city_id"))
 
@@ -35,7 +36,7 @@ func InsertAddressOptionByUserIDController(c echo.Context) error {
 }
 
 func GetAddressOptionsByUserIDController(c echo.Context) error {
-	userID, _ := strconv.Atoi(c.Param("user_id"))
+	userID := middlewares.ExtractTokenUserId(c)
 
 	addressOption, err := database.GetAddressOptionsByUserID(userID)
 	if err != nil {

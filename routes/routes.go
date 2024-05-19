@@ -26,6 +26,12 @@ func New() *echo.Echo {
 	r.POST("/login", controllers.LoginController)
 	r.POST("/register", controllers.InsertUserController)
 
+	// Category
+	r.GET("/category/:store_id", controllers.GetCategoriesByStoreIDController)
+
+	// Product
+	r.GET("/product/:store_id", controllers.GetProductsByStoreIDController)
+
 	// route with middleware
 	m := r.Group("/member")
 	jwtSecret := env.Find("SECRETE_JWT", "legal")
@@ -36,20 +42,20 @@ func New() *echo.Echo {
 	m.GET("/users/:id", controllers.GetUserByIDController)
 	m.PUT("/users", controllers.UpdateUserController)
 
-	// Store
-	m.POST("/store/:user_id", controllers.ActivateStoreController)
+	// Activate Store
+	m.POST("/activate-store/:user_id", controllers.ActivateStoreController)
 
 	// Category
-	m.GET("/category/:store_id", controllers.GetCategoriesByStoreIDController)
 	m.POST("/category/:store_id", controllers.InsertCategoryController)
 
 	// Product
-	m.GET("/product/:store_id", controllers.GetProductsByStoreIDController)
 	m.POST("/product/category/:category_id", controllers.InsertProductByCategoryIDController)
+	m.PUT("/product/:product_id", controllers.UpdateProductByProductID)
+	m.DELETE("/product/:product_id", controllers.DeleteProductByProductID)
 
 	// Address Option
-	m.GET("/address-option/:user_id", controllers.GetAddressOptionsByUserIDController)
-	m.POST("/address-option/:user_id", controllers.InsertAddressOptionByUserIDController)
+	m.GET("/address-option", controllers.GetAddressOptionsByUserIDController)
+	m.POST("/address-option", controllers.InsertAddressOptionByUserIDController)
 
 	// Shipment Option
 	m.GET("/shipment-option/:store_id", controllers.GetShipmentOptionsByStoreIDController)

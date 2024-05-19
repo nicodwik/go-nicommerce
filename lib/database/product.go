@@ -27,11 +27,20 @@ func GetProductsByStoreID(storeID int) (interface{}, error) {
 func GetProductByID(id int) (*models.Product, error) {
 	var product models.Product
 
-	if err := config.DB.Where("store_id = ?", id).First(&product).Error; err != nil {
+	if err := config.DB.Where("id = ?", id).First(&product).Error; err != nil {
 		return nil, err
 	}
 
 	return &product, nil
+}
+
+func DeleteProduct(product *models.Product) error {
+
+	if err := config.DB.Delete(&product).Error; err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func UpdateProductInfo(product *models.Product) (*models.Product, error) {
