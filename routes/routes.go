@@ -32,6 +32,9 @@ func New() *echo.Echo {
 	// Product
 	r.GET("/product/:store_id", controllers.GetProductsByStoreIDController)
 
+	// Transaction Callback (PG)
+	r.POST("/transaction/callback", controllers.PaymentCallback)
+
 	// route with middleware
 	m := r.Group("/member")
 	jwtSecret := env.Find("SECRETE_JWT", "legal")
