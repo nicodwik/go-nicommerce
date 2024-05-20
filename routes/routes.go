@@ -32,6 +32,9 @@ func New() *echo.Echo {
 	// Product
 	r.GET("/product/:store_id", controllers.GetProductsByStoreIDController)
 
+	// Shipment Option
+	r.GET("/shipment-option/:store_id", controllers.GetShipmentOptionsByStoreIDController)
+
 	// Transaction Callback (PG)
 	r.POST("/transaction/callback", controllers.PaymentCallback)
 
@@ -61,8 +64,7 @@ func New() *echo.Echo {
 	m.POST("/address-option", controllers.InsertAddressOptionByUserIDController)
 
 	// Shipment Option
-	m.GET("/shipment-option/:store_id", controllers.GetShipmentOptionsByStoreIDController)
-	m.POST("/shipment-option/:store_id", controllers.InsertShipmentOptionByStoreIDController)
+	m.POST("/shipment-option", controllers.InsertShipmentOptionController)
 
 	// Product Gallery
 	m.GET("/product-gallery/:product_id", controllers.GetProductGalleriesByProductIDController)

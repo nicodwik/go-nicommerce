@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"go-nicommerce/lib/database"
+	"go-nicommerce/middlewares"
 	"go-nicommerce/models"
 	"net/http"
 	"strconv"
@@ -9,8 +10,15 @@ import (
 	"github.com/labstack/echo"
 )
 
-func InsertShipmentOptionByStoreIDController(c echo.Context) error {
-	storeID, _ := strconv.Atoi(c.Param("store_id"))
+func InsertShipmentOptionController(c echo.Context) error {
+	storeID := middlewares.ExtractTokenUserId(c)
+
+	_, err := database.GetShipmentOptionsByStoreID(storeID)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]interface{}{
+			"message": "Store Not Found",
+		})
+	}
 
 	shipmentOption := models.ShipmentOption{
 		StoreID:  uint(storeID),
