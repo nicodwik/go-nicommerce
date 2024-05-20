@@ -52,7 +52,7 @@ func New() *echo.Echo {
 	m.POST("/activate-store", controllers.ActivateStoreController)
 
 	// Category
-	m.POST("/category/:store_id", controllers.InsertCategoryController)
+	m.POST("/category", controllers.InsertCategoryController)
 
 	// Product
 	m.POST("/product/category/:category_id", controllers.InsertProductByCategoryIDController)

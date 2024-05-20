@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"go-nicommerce/lib/database"
+	"go-nicommerce/middlewares"
 	"go-nicommerce/models"
 	"net/http"
 	"strconv"
@@ -10,7 +11,14 @@ import (
 )
 
 func InsertCategoryController(c echo.Context) error {
-	storeID, _ := strconv.Atoi(c.Param("store_id"))
+	storeID := middlewares.ExtractTokenUserId(c)
+
+	_, err := database.GetStoreByID(storeID)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]interface{}{
+			"message": "Store Not Found",
+		})
+	}
 
 	category := models.Category{
 		StoreID: uint(storeID),

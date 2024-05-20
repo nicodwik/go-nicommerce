@@ -12,3 +12,13 @@ func InsertStore(store *models.Store) (interface{}, error) {
 
 	return store, nil
 }
+
+func GetStoreByID(storeID int) (*models.Store, error) {
+	var store models.Store
+
+	if err := config.DB.First(&store).Error; err != nil {
+		return nil, err
+	}
+
+	return &store, nil
+}

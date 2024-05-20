@@ -13,7 +13,7 @@ import (
 func InsertShipmentOptionController(c echo.Context) error {
 	storeID := middlewares.ExtractTokenUserId(c)
 
-	_, err := database.GetShipmentOptionsByStoreID(storeID)
+	_, err := database.GetStoreByID(storeID)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]interface{}{
 			"message": "Store Not Found",

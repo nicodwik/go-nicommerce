@@ -70,7 +70,7 @@ func TestInsertShipmentOptionByStoreIDController(t *testing.T) {
 		c.SetPath(testCase.path)
 
 		// Assertions
-		if assert.NoError(t, InsertShipmentOptionByStoreIDController(c)) {
+		if assert.NoError(t, InsertShipmentOptionController(c)) {
 			assert.Equal(t, http.StatusOK, rec.Code)
 			body := rec.Body.String()
 			assert.True(t, strings.HasPrefix(body, testCase.expectBodyStartsWith))
