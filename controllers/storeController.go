@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"go-nicommerce/lib/database"
+	"go-nicommerce/middlewares"
 	"go-nicommerce/models"
 	"net/http"
 	"strconv"
@@ -10,12 +11,8 @@ import (
 )
 
 func ActivateStoreController(c echo.Context) error {
-	userId, err := strconv.Atoi(c.Param("user_id"))
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": err.Error(),
-		})
-	}
+	userId := middlewares.ExtractTokenUserId(c)
+
 	province_id, _ := strconv.Atoi(c.FormValue("province_id"))
 	city_id, _ := strconv.Atoi(c.FormValue("city_id"))
 
@@ -32,7 +29,7 @@ func ActivateStoreController(c echo.Context) error {
 	savedStore, e := database.InsertStore(&store)
 	if e != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": err.Error(),
+			"message": e.Error(),
 		})
 	}
 

@@ -46,7 +46,7 @@ func New() *echo.Echo {
 	m.PUT("/users", controllers.UpdateUserController)
 
 	// Activate Store
-	m.POST("/activate-store/:user_id", controllers.ActivateStoreController)
+	m.POST("/activate-store", controllers.ActivateStoreController)
 
 	// Category
 	m.POST("/category/:store_id", controllers.InsertCategoryController)
