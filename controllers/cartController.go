@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"go-nicommerce/lib/database"
+	"go-nicommerce/middlewares"
 	"go-nicommerce/models"
 	"net/http"
 	"strconv"
@@ -10,7 +11,14 @@ import (
 )
 
 func InsertProductToCart(c echo.Context) error {
-	cartID, _ := strconv.Atoi(c.Param("cart_id"))
+	cartID := middlewares.ExtractTokenUserId(c)
+	_, err := database.GetCartByID(cartID)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]interface{}{
+			"message": "Cart Not Found",
+		})
+	}
+
 	productID, _ := strconv.Atoi(c.FormValue("product_id"))
 	qty, _ := strconv.Atoi(c.FormValue("qty"))
 	shippingPrice, _ := strconv.Atoi(c.FormValue("shipping_price"))
@@ -80,9 +88,16 @@ func InsertProductToCart(c echo.Context) error {
 }
 
 func DeleteProductFromCart(c echo.Context) error {
-	cartID, _ := strconv.Atoi(c.Param("cart_id"))
+	cartID := middlewares.ExtractTokenUserId(c)
+	_, err := database.GetCartByID(cartID)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]interface{}{
+			"message": "Cart Not Found",
+		})
+	}
+
+	cartDetailID, _ := strconv.Atoi(c.Param("cart_detail_id"))
 	shippingPrice, _ := strconv.Atoi(c.FormValue("shipping_price"))
-	cartDetailID, _ := strconv.Atoi(c.QueryParam("cart_detail_id"))
 
 	// get cart detail
 	cartDetail, err := database.GetCartDetailByID(cartDetailID)
