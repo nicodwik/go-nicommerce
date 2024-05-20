@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"go-nicommerce/env"
 	"go-nicommerce/lib/database"
+	"go-nicommerce/middlewares"
 	"go-nicommerce/models"
 	"io"
 	"io/ioutil"
@@ -43,7 +44,14 @@ type city struct {
 }
 
 func InsertTransactionController(c echo.Context) error {
-	cartID, _ := strconv.Atoi(c.Param("cart_id"))
+	cartID := middlewares.ExtractTokenUserId(c)
+	_, err := database.GetCartByID(cartID)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]interface{}{
+			"message": "Cart Not Found",
+		})
+	}
+
 	storeID, _ := strconv.Atoi(c.FormValue("store_id"))
 	shippingID, _ := strconv.Atoi(c.FormValue("shipping_id"))
 	addressID, _ := strconv.Atoi(c.FormValue("address_id"))

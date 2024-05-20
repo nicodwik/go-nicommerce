@@ -75,7 +75,7 @@ func New() *echo.Echo {
 	m.DELETE("/cart/:cart_detail_id", controllers.DeleteProductFromCart)
 
 	// Transaction
-	m.POST("/transaction/:cart_id", controllers.InsertTransactionController)
+	m.POST("/transaction", controllers.InsertTransactionController)
 
 	return e
 }
